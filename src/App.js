@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
+function Test({fav}) { // <- 구조분해할당
+  // params 안에는 컴포넌트를 쓸 때 전달되는 매개변수들이 들어있고, 객체처럼 . 을 이용해서 잡는다.
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      { fav }
+      
     </div>
   );
 }
 
-export default App;
+function App() {
+  return (
+    <div>
+      <h1>This is Sol's first react blog</h1>
+      <Test fav = "kin1" />
+      <Test fav = "kin2" />
+      <Test fav = "kin3" />
+    </div>
+  );
+}
+
+export default App; // export 명령어로 다른 파일에서 App component를 사용할 수 있게 됨.
