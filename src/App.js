@@ -1,57 +1,53 @@
 import React from 'react';
-import PropTypes from "prop-types"
 
-function Test({ fav }) { // <- 구조분해할당
-  // params 안에는 컴포넌트를 쓸 때 전달되는 매개변수들이 들어있고, 객체처럼 . 을 이용해서 잡는다.
-  return (
-    <div>
-      { fav}
-    </div>
-  );
-}
-
-const foods = [
-  {
-    id: 1,
-    name: 'taco',
-    rating: 5,
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/001_Tacos_de_carnitas%2C_carne_asada_y_al_pastor.jpg/220px-001_Tacos_de_carnitas%2C_carne_asada_y_al_pastor.jpg",
-  },
-  {
-    id: 2,
-    name: 'milk',
-    rating: 10,
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Glass_of_Milk_%2833657535532%29.jpg/220px-Glass_of_Milk_%2833657535532%29.jpg",
-  },
-  {
-    id: 3,
-    name: 'cookie',
-    rating: 7,
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2ChocolateChipCookies.jpg/250px-2ChocolateChipCookies.jpg",
+class App extends React.Component {
+  state = {
+    testVar: 10
   }
-];
 
-function PrintFood({ food, foodImage, rating }) { // 리액트 컴포넌트는 태그와 구별하기 위해 무조건 대문자로 시작
-  return (
-    <div>
-      <h1>food name : {food}</h1>
-      <img src={foodImage} alt={food}></img>
-      <h4>rating : {rating} / 10</h4>
-    </div>
-  )
-}
 
-PrintFood.propTypes = {
-  food : PropTypes.string.isRequired,
-  foodImage : PropTypes.string.isRequired,
-  rating : PropTypes.number.isRequired
-}
+  /* 리액트 컴포넌트의 생명주기 
+  *  constructor -> render -> dismount -> render & update (optional) -> willunmount
+  */
 
-function App() {
-  return (
-    foods.map(cur =>
-      <PrintFood key={cur.id} food={cur.name} foodImage={cur.image} rating={cur.rating} />)
-  )
+
+  constructor() {
+    super() // 부모 클래스(React.Component)의 생성자. 반드시 명시해줘야 함.
+    console.log("생성자임")
+  }
+
+  componentDidMount() { // 컴포넌트 렌더링을 마치면 호출
+    console.log("컴포넌트 디스마운트")
+  }
+
+  componentWillUnmount() { // 컴포넌트가 죽을 때 호출
+    console.log("컴포넌트 윌 언마운트")
+  }
+
+  componentDidUpdate() { // setState 등으로 구성요소에 변경이 발생할 때 호출(이후 render가 재호출됨)
+    console.log("컴포넌트 디드 업데이트")
+  }
+
+  render() { // 렌더링이 발생할 때 생성
+    console.log("렌더링임")
+    return (
+      <div>
+        <h1>클래스형 컴포넌트임 {this.state.testVar} </h1>
+        <button onClick={this.Plus}>PlusButton</button>
+        <button onClick={this.Minus}>MinusButton</button>
+      </div>
+    )
+  }
+  Plus = () => {     // 화살표 함수 문법임.
+    this.setState(cur => ({
+      testVar: cur.testVar + 1
+    }))
+  }
+  Minus = () => {
+    this.setState(cur => ({
+      testVar: cur.testVar - 1
+    }))
+  }
 }
 
 export default App; // export 명령어로 다른 파일에서 App component를 사용할 수 있게 됨.
